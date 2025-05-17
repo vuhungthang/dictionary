@@ -86,7 +86,7 @@ function App() {
           }
         }}
       />
-      <button onClick={findWord}>Check</button>
+      <button onClick={findWord}>Search</button>
 
       <div className="word">
         {/* Display dictionary entries */}
