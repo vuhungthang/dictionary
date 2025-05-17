@@ -75,18 +75,21 @@ function App() {
 
   return (
     <>
-      <h1>Dictionary</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            findWord();
-          }
-        }}
-      />
-      <button onClick={findWord}>Search</button>
+      {/* Container for centering title and search bar */}
+      <div style={{ textAlign: 'center' }}>
+        <h1>Dictionary</h1>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              findWord();
+            }
+          }}
+        />
+        <button onClick={findWord}>Search</button>
+      </div>
 
       <div className="word">
         {/* Display dictionary entries */}
