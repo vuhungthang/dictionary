@@ -140,7 +140,7 @@ function App() {
                         {meaning.definitions.map((definition, definitionIndex) => (
                           <li key={definitionIndex}>
                             {definition.definition}
-                            {definition.example && <p><strong>Example:</strong> {definition.example}</p>}
+                            {definition.example && <p style={{ backgroundColor: '#f0f0f0', padding: '5px', fontStyle: 'italic' }}>{definition.example}</p>}
                           </li>
                         ))}
                       </ul>
@@ -148,7 +148,7 @@ function App() {
                       meaning.definitions.map((definition, definitionIndex) => (
                         <div key={definitionIndex}>
                           <p><strong>Definition:</strong> {definition.definition}</p>
-                          {definition.example && <p><strong>Example:</strong> {definition.example}</p>}
+                          {definition.example && <p style={{ backgroundColor: '#f0f0f0', padding: '5px', fontStyle: 'italic' }}>{definition.example}</p>}
                         </div>
                       ))
                     )}
