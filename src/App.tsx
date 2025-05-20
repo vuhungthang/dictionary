@@ -1,11 +1,10 @@
 import { useState } from "react";
 
-// Define types based on the API response structure
 interface Definition {
   definition: string;
   synonyms: string[];
   antonyms: string[];
-  example?: string; // example is optional
+  example?: string;
 }
 
 interface Meaning {
@@ -18,8 +17,8 @@ interface Meaning {
 interface Phonetic {
     text: string;
     audio: string;
-    sourceUrl?: string; // optional
-    license?: { // optional
+    sourceUrl?: string;
+    license?: {
         name: string;
         url: string;
     }
@@ -44,8 +43,8 @@ function App() {
   const [notFoundError, setNotFoundError] = useState(false);
 
   async function findWord() {
-    setNotFoundError(false); // Reset error state on new search
-    setDictionaryEntries(null); // Clear previous results
+    setNotFoundError(false);
+    setDictionaryEntries(null);
 
     try {
       const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm}`, {
@@ -57,25 +56,21 @@ function App() {
           setNotFoundError(true);
         } else {
            console.error("API error:", response.status);
-           // Optionally handle other errors here
         }
-        return; // Stop processing if not OK
+        return;
       }
 
       const data = await response.json();
 
-      // Assuming data is an array based on the API docs for successful responses
       setDictionaryEntries(data);
 
     } catch (error) {
       console.error("Fetch error:", error);
-      // Optionally handle network errors here
     }
   }
 
   return (
     <>
-      {/* Container for centering title and search bar */}
       <div style={{ textAlign: 'center' }}>
         <h1>Dictionary</h1>
         <input
@@ -92,7 +87,6 @@ function App() {
       </div>
 
       <div className="word">
-        {/* Display dictionary entries */}
         {notFoundError ? (
           <div>
             <h2>No Definitions Found</h2>
@@ -101,10 +95,8 @@ function App() {
           </div>
         ) : (
           dictionaryEntries && dictionaryEntries.map((entry: DictionaryEntry, index) => {
-            // Find the first phonetic entry with an audio link
             const audioPhonetic = entry.phonetics.find(p => p.audio);
 
-            // Function to play the audio
             const playAudio = () => {
               if (audioPhonetic && audioPhonetic.audio) {
                 const audio = new Audio(audioPhonetic.audio);
@@ -114,27 +106,20 @@ function App() {
 
             return (
               <div key={index}>
-                {/* Added style to make the word bigger and use a different font */}
                 <h2 style={{ fontSize: '2.5em', fontFamily: 'serif' }}>{entry.word}</h2>
-                {/* Display the phonetic text if available and make it clickable */}
-                {/* Add an onClick handler to play the audio */}
-                {/* Added a style to indicate it's clickable (optional) */}
                 {entry.phonetic && (
                   <p
                     onClick={playAudio}
                     style={{ cursor: audioPhonetic ? 'pointer' : 'default', textDecoration: 'none' }}
                   >
-                    {/* Add sound icon if audio is available */}
                     {entry.phonetic}
                     {audioPhonetic && <span> 🗣️</span>}
                   </p>
                 )}
 
-                {/* Display meanings and definitions */}
                 {entry.meanings.map((meaning, meaningIndex) => (
                   <div key={meaningIndex}>
                     <h3>{meaning.partOfSpeech}</h3>
-                    {/* Display definitions as an unordered list if there are multiple, otherwise display as paragraphs */}
                     {meaning.definitions.length > 1 ? (
                       <ul>
                         {meaning.definitions.map((definition, definitionIndex) => (
